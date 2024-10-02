@@ -6,7 +6,7 @@
 #    By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/13 22:47:55 by ibertran          #+#    #+#              #
-#    Updated: 2024/10/01 22:46:18 by ibertran         ###   ########lyon.fr    #
+#    Updated: 2024/10/02 00:39:23 by ibertran         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,11 @@ DEPS = $(patsubst %.o,%.d,$(OBJS))
 
 SRC = \
 	main \
+	init_grid \
+	deinit_grid \
+	parse_views \
+	display_grid \
+	solve \
 
 # *** LIBRARIES && INCLUDES  ************************************************* #
 
@@ -36,7 +41,8 @@ INCS = \
 # *** CONFIG ***************************************************************** #
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror $(OFLAGS)
+OFLAGS		=	-O3
 
 DEFINES		=
 
@@ -56,9 +62,10 @@ BUILD_DIR := $(BUILD_DIR)$(MODE)/
 endif
 
 ifeq ($(MODE),debug)
-CFLAGS := $(CFLAGS) -g3
+CFLAGS := $(filter-out $(OFLAGS),$(CFLAGS)) -g3
+SRC := $(filter-out display_grid,$(SRC)) display_grid_DEBUG
 else ifeq ($(MODE),fsanitize)
-CFLAGS := $(CFLAGS) -g3 -fsanitize=address
+CFLAGS := $(filter-out $(OFLAGS),$(CFLAGS)) -g3 -fsanitize=address
 else ifneq  ($(MODE),)
 ERROR = MODE
 endif

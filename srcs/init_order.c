@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_order.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibertran <ibertran@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/01 22:27:12 by ibertran          #+#    #+#             */
-/*   Updated: 2024/10/02 02:48:09 by ibertran         ###   ########lyon.fr   */
+/*   Created: 2024/10/02 02:48:20 by ibertran          #+#    #+#             */
+/*   Updated: 2024/10/02 02:59:20 by ibertran         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
 #include "rush01.h"
 
-int	main(int ac, char **av)
+uint8_t	*init_order(uint8_t	size)
 {
-	t_grid	grid;
-	uint8_t	*order;
+	uint8_t	printed[GRIDSIZE_MAX][GRIDSIZE_MAX] = 
+	uint8_t	*ptr;
+	uint8_t i;
+	uint8_t x ;
+	uint8_t y ;
 
-	if (ac != 2 || 0 != init_grid(av[1], &grid))
+	printed = {0};
+	ptr = malloc(sizeof(*ptr) * size * size);
+	if (NULL == ptr)
+		return (NULL);
+	i = 0;
+
+	x = 0;
+	while (x < size)
 	{
-		return (1 && write(STDERR_FILENO, "Error\n", 6));
+		y = 0;
+		while (y < size)
+		{
+			ptr[i++] = 
+			y++;
+		}
+		x++;
 	}
-	if (0 != parse_views(av[1], &grid) || 1 != solve(&grid, 0))
-	{
-		deinit_grid(&grid);
-		return (1 && write(STDERR_FILENO, "Error\n", 6));
-	}
-	display_grid(&grid);
-	deinit_grid(&grid);
-	return (0);
+	
 }
